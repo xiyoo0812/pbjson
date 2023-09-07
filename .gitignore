@@ -1,3 +1,18 @@
+*.~uml
+*.csv 
+*.dll
+*.log
+*.exe
+*.txt
+*.dump
+*.dmp
+*.dat 
+
+#ignore this dir##
+.vs
+.vscode
+temp
+
 # Prerequisites
 *.d
 
@@ -28,5 +43,17 @@
 
 # Executables
 *.exe
+*.exp
 *.out
 *.app
+
+# msvc
+*.db
+*.suo
+*.user
+*.opendb
+*.sdf
+*.opensdf
+*.zip
+*.7z
+*.tar
