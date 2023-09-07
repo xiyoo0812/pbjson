@@ -1,5 +1,9 @@
 #pragma once
 
+#include <map>
+#include <string>
+#include <vector>
+
 #include "google/protobuf/compiler/plugin.h"
 #include "google/protobuf/compiler/code_generator.h"
 #include "google/protobuf/compiler/plugin.pb.h"
@@ -9,19 +13,16 @@
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/prettywriter.h>
-#include <map>
-#include <string>
-#include <vector>
 
 using namespace google::protobuf::compiler;
 using namespace google::protobuf;
 
-class PBExtendHelper {
+class PBExtend {
 public:
     typedef std::map<std::string, std::vector<std::string>> KVMap;
 
     template<typename DESC>
-    PBExtendHelper(DESC* descriptor) {
+    PBExtend(DESC* descriptor) {
         m_kvMap.clear();
         SourceLocation stLocation;
         if (descriptor->GetSourceLocation(&stLocation)) {
@@ -48,14 +49,15 @@ public:
     }
 
     void StripWhitespace(std::string* val) {
-        size_t start = val->find_first_not_of(" ");
-        size_t stop = val->find_last_not_of(" ");
+        size_t start = val->find_first_not_of(" \r\n");
+        size_t stop = val->find_last_not_of(" \r\n");
         val->erase(stop + 1);
         val->erase(0, start);
     }
-    
-    bool ParseLine(KVMap& stkvMap, const std::string& szComment) {
+
+    bool ParseLine(KVMap& stkvMap, std::string& szComment) {
         if (szComment.find("@") == std::string::npos) {
+            StripWhitespace(&szComment);
             stkvMap["desc"].push_back(szComment);
             return true;
         }

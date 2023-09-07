@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "PBExtendHelper.h"
+#include "pbextend.h"
 #include <rapidjson/document.h>
 #include <rapidjson/error/en.h>
 #include <rapidjson/stringbuffer.h>
@@ -27,7 +27,7 @@ const char* aszType[19] = {
     "TYPE_SINT64"
 };
 
-typedef std::map<std::string, PBExtendHelper*> ExtendMap;
+typedef std::map<std::string, PBExtend*> ExtendMap;
 ExtendMap g_stExtendMap;
 
 class PracingGenerator : public CodeGenerator {
@@ -105,7 +105,7 @@ public:
                 writer.Key("full_name");
                 writer.String(desc->full_name().c_str());
                 writer.Key("extend");
-                PBExtendHelper stPBExtend(desc);
+                PBExtend stPBExtend(desc);
                 stPBExtend.Dump(writer);
                 writer.Key("alias");
                 if (stPBExtend.HasProp("name")) {
@@ -129,7 +129,7 @@ public:
                     writer.Int(vdesc->number());
                     writer.Key("extend");
 
-                    PBExtendHelper stPBExtend(vdesc);
+                    PBExtend stPBExtend(vdesc);
                     stPBExtend.Dump(writer);
                     writer.Key("alias");
                     if (stPBExtend.HasProp("name")) {
@@ -158,7 +158,7 @@ public:
                 writer.Key("full_name");
                 writer.String(desc->full_name().c_str());
                 writer.Key("extend");
-                PBExtendHelper stPBExtend(desc);
+                PBExtend stPBExtend(desc);
                 stPBExtend.Dump(writer);
                 writer.Key("alias");
                 if (stPBExtend.HasProp("name")) {
@@ -191,7 +191,7 @@ public:
                         writer.StartObject();
                         writer.Key("extend");
 
-                        PBExtendHelper stPBExtend(odesc);
+                        PBExtend stPBExtend(odesc);
                         stPBExtend.Dump(writer);
                         writer.EndObject();
                     }
@@ -204,7 +204,7 @@ public:
                     writer.Int(fdesc->number());
                     writer.Key("extend");
 
-                    PBExtendHelper stPBExtend(fdesc);
+                    PBExtend stPBExtend(fdesc);
                     stPBExtend.Dump(writer);
                     writer.Key("alias");
                     if (stPBExtend.HasProp("name")) {
